@@ -1,20 +1,22 @@
 package controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 public class dashboardFormController {
 
     @FXML
-    public JFXTextField txtPassword;
+    public JFXTextField txtEmail;
 
     @FXML
-    public JFXTextField txtEmail;
+    public JFXPasswordField jfxPassword;
 
     @FXML
     public void btnEmpolyeeLogin(ActionEvent actionEvent) {
@@ -51,17 +53,32 @@ public class dashboardFormController {
 
     @FXML
     public void btnAdminLogin(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/admin_form.fxml"));
-            Scene scene = new Scene(loader.load());
+        String correctEmail = "admin@gmail.com";
+        String correctPassword = "Admin12345@";
 
-            Stage stage = (Stage) ((javafx.scene.Node) actionEvent.getSource()).getScene().getWindow();
+        String enteredEmail = txtEmail.getText();
+        String enteredPassword = jfxPassword.getText();
 
-            stage.setScene(scene);
-            stage.setTitle("Admin Form");
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (enteredEmail.equals(correctEmail) && enteredPassword.equals(correctPassword)) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/admin_form.fxml"));
+                Scene scene = new Scene(loader.load());
+
+                Stage stage = (Stage) ((javafx.scene.Node) actionEvent.getSource()).getScene().getWindow();
+
+                stage.setScene(scene);
+                stage.setTitle("Admin Form");
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Login Error");
+            alert.setHeaderText("Invalid Credentials");
+            alert.setContentText("The email or password you entered is incorrect.");
+            alert.showAndWait();
         }
     }
+
 }
