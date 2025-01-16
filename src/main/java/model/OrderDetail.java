@@ -9,13 +9,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class employee {
+public class OrderDetail {
 
-    private String eName;
-    private String eContact;
-    private String eEmail;
-    private String eAddress;
-    private String ePassword;
-
+    private Long pID;
+    private Long oID;
+    private String pName;
+    private int quantity;
+    private double pPrice;
+    private double discount;
 
 }

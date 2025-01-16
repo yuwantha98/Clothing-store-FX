@@ -13,8 +13,7 @@ public class DBConnection {
     private Connection connection = null;
     private static DBConnection instance;
 
-    private DBConnection() {
-    }
+    private DBConnection() { }
 
     public Connection getConnection() {
         if (connection == null) {
