@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 public class Employee {
 
+    private String eId;
     private String eName;
     private String eContact;
     private String eEmail;
