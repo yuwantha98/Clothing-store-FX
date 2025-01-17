@@ -53,7 +53,7 @@ public class dashboardFormController {
     @FXML
     public void btnAdminLogin(ActionEvent actionEvent) {
         String correctEmail = "admin@gmail.com";
-        String correctPassword = "Admin12345@";
+        String correctPassword = "12345";
 
         String enteredEmail = txtEmail.getText();
         String enteredPassword = jfxPassword.getText();
