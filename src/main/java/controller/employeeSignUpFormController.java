@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Employee;
+import org.jasypt.util.text.BasicTextEncryptor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,6 +37,11 @@ public class employeeSignUpFormController {
     public void btnSignUpOnAction(ActionEvent actionEvent) throws SQLException {
         String SQL = "INSERT INTO Employee (eName,eContact,eEmail,ePassword) VALUES(?,?,?,?)";
 
+        String key = "#1998YUwa";
+        BasicTextEncryptor basicTextEncryptor = new BasicTextEncryptor();
+        basicTextEncryptor.setPassword(key);
+        String encrypt = basicTextEncryptor.encrypt(txtEmpPassword.getText());
+
         if(txtEmpPassword.getText().equals(txtEmpConfirmPassword.getText())){
 
             Connection connection = DBConnection.getInstance().getConnection();
@@ -48,7 +54,7 @@ public class employeeSignUpFormController {
                         txtEmpName.getText(),
                         txtEmpContact.getText(),
                         txtEmpEmail.getText(),
-                        txtEmpPassword.getText()
+                        encrypt
                 );
 
                 PreparedStatement psTm = connection.prepareStatement(SQL);
