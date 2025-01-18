@@ -32,6 +32,13 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="18.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/back.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </JFXButton>
    </children>
 </AnchorPane>
