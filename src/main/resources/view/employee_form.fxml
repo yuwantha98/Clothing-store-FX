@@ -4,10 +4,11 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.employeeFormController">
+<AnchorPane prefHeight="548.0" prefWidth="938.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.employeeFormController">
    <children>
-      <AnchorPane layoutY="-2.0" prefHeight="451.0" prefWidth="763.0">
+      <AnchorPane layoutY="-2.0" prefHeight="522.0" prefWidth="1054.0">
          <children>
             <JFXButton layoutX="56.0" layoutY="237.0" onAction="#btnBackOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #0077b3;" text=" Back" textFill="WHITE">
                <graphic>
@@ -20,6 +21,7 @@
             </JFXButton>
             <JFXButton layoutX="55.0" layoutY="54.0" onAction="#btnProductOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #0077b3;" text="Product" textFill="WHITE" />
             <JFXButton layoutX="56.0" layoutY="176.0" onAction="#btnSupplierOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #0077b3;" text="Supplier" textFill="WHITE" />
+            <BorderPane fx:id="borderPane" layoutX="174.0" layoutY="20.0" prefHeight="502.0" prefWidth="746.0" />
          </children>
       </AnchorPane>
       <JFXButton layoutX="55.0" layoutY="113.0" onAction="#btnOrderOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #0077b3;" text="Order" textFill="WHITE" />
