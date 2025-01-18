@@ -3,8 +3,11 @@ package controller;
 import db.DBConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.Employee;
 
 import java.sql.Connection;
@@ -73,6 +76,23 @@ public class employeeSignUpFormController {
             }
         }else {
             new Alert(Alert.AlertType.ERROR, "Passwords do not match.").show();
+        }
+    }
+
+    @FXML
+    public void btnBackOnAction(ActionEvent actionEvent) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/admin_form.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            Stage stage = (Stage) ((javafx.scene.Node) actionEvent.getSource()).getScene().getWindow();
+
+            stage.setScene(scene);
+            stage.setTitle("Admin Form");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
