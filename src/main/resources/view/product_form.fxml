@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.productFormController">
    <children>
@@ -29,7 +29,6 @@
             <JFXTextField fx:id="txtProductID" layoutX="18.0" layoutY="312.0" prefHeight="26.0" prefWidth="135.0" promptText="ID" />
             <JFXTextField fx:id="txtProductName" layoutX="189.0" layoutY="313.0" prefHeight="26.0" prefWidth="135.0" promptText="name" />
             <JFXTextField fx:id="txtProductSize" layoutX="363.0" layoutY="313.0" prefHeight="26.0" prefWidth="135.0" promptText="size" />
-            <JFXTextField fx:id="txtProductSupplier" layoutX="535.0" layoutY="313.0" promptText="supplier" />
             <JFXTextField fx:id="txtProductQty" layoutX="707.0" layoutY="313.0" promptText="qty" />
             <JFXTextField fx:id="txtProductBPrice" layoutX="18.0" layoutY="372.0" prefHeight="26.0" prefWidth="135.0" promptText="buying price" />
             <JFXTextField fx:id="txtProductSPrice" layoutX="189.0" layoutY="372.0" prefHeight="26.0" prefWidth="135.0" promptText="price" />
@@ -57,6 +56,7 @@
                </font>
             </JFXButton>
             <JFXTextField fx:id="txtProductSearchByID" layoutX="18.0" layoutY="453.0" prefHeight="26.0" prefWidth="66.0" promptText="ID" />
+            <JFXComboBox fx:id="cmbProductSupplier" layoutX="535.0" layoutY="312.0" prefHeight="26.0" prefWidth="135.0" promptText="Supplier" />
          </children>
       </AnchorPane>
    </children>
