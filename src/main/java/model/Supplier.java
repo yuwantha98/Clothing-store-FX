@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class Supplier {
 
-    private Long sID;
+    private String sID;
     private String sName;
     private String sCompany;
     private String sContact;
