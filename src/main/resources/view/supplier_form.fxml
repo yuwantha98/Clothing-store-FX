@@ -21,8 +21,8 @@
             </TableView>
             <JFXTextField fx:id="txtSupplierID" layoutX="36.0" layoutY="378.0" prefHeight="26.0" prefWidth="135.0" promptText="ID" />
             <JFXTextField fx:id="txtSupplierName" layoutX="212.0" layoutY="379.0" prefHeight="26.0" prefWidth="135.0" promptText="name" />
-            <JFXTextField fx:id="txtSupplierContact" layoutX="391.0" layoutY="379.0" prefHeight="26.0" prefWidth="135.0" promptText="size" />
-            <JFXTextField fx:id="txtSupplierCompany" layoutX="568.0" layoutY="379.0" promptText="supplier" />
+            <JFXTextField fx:id="txtSupplierContact" layoutX="391.0" layoutY="379.0" prefHeight="26.0" prefWidth="135.0" promptText="size" text="contact" />
+            <JFXTextField fx:id="txtSupplierCompany" layoutX="568.0" layoutY="379.0" promptText="supplier" text="company" />
             <JFXButton layoutX="757.0" layoutY="379.0" onAction="#btnAddSupplierOnAction" prefHeight="26.0" prefWidth="66.0" style="-fx-background-color: #0077b3;" text="Add" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
