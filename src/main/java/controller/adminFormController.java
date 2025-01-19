@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Employee;
 
+
 import java.sql.*;
 
 public class adminFormController {
@@ -48,7 +49,6 @@ public class adminFormController {
 
     private ObservableList<Employee> employeeList;
 
-    @FXML
     public void initialize() {
 
         colID.setCellValueFactory(new PropertyValueFactory<>("eId"));
