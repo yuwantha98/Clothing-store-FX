@@ -10,7 +10,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Employee;
 import model.Supplier;
 
 import java.sql.*;
@@ -56,10 +55,10 @@ public class supplierFormController {
         colCompany.setCellValueFactory(new PropertyValueFactory<>("sCompany"));
         colContact.setCellValueFactory(new PropertyValueFactory<>("sContact"));
 
-        loadEmployeeData();
+        loadSupplierData();
     }
 
-    private void loadEmployeeData() {
+    private void loadSupplierData() {
         supplierList = FXCollections.observableArrayList();
 
         try {
@@ -107,7 +106,7 @@ public class supplierFormController {
 
         if (rowsAffected > 0) {
             new Alert(Alert.AlertType.INFORMATION, "Supplier Added successfully!").show();
-            loadEmployeeData();
+            loadSupplierData();
 
             txtSupplierName.clear();
             txtSupplierCompany.clear();
@@ -154,7 +153,7 @@ public class supplierFormController {
                     if (rowsAffected > 0) {
                         new Alert(Alert.AlertType.INFORMATION, "Supplier details updated successfully!").show();
 
-                        loadEmployeeData();
+                        loadSupplierData();
 
                     } else {
                         new Alert(Alert.AlertType.WARNING, "No supplier found with the provided ID").show();
@@ -192,7 +191,7 @@ public class supplierFormController {
                 if (rowsAffected > 0) {
                     new Alert(Alert.AlertType.INFORMATION, "Supplier details delete successfully!").show();
 
-                    loadEmployeeData();
+                    loadSupplierData();
 
                 } else {
                     new Alert(Alert.AlertType.WARNING, "No supplier found with the provided ID.").show();
