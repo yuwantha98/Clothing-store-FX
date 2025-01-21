@@ -26,37 +26,35 @@
                   <TableColumn fx:id="colCategory" prefWidth="100.79998779296875" text="Category" />
                </columns>
             </TableView>
-            <JFXTextField fx:id="txtProductID" layoutX="18.0" layoutY="312.0" prefHeight="26.0" prefWidth="135.0" promptText="ID" />
-            <JFXTextField fx:id="txtProductName" layoutX="189.0" layoutY="313.0" prefHeight="26.0" prefWidth="135.0" promptText="name" />
-            <JFXTextField fx:id="txtProductSize" layoutX="363.0" layoutY="313.0" prefHeight="26.0" prefWidth="135.0" promptText="size" />
-            <JFXTextField fx:id="txtProductQty" layoutX="707.0" layoutY="313.0" promptText="qty" />
-            <JFXTextField fx:id="txtProductBPrice" layoutX="18.0" layoutY="372.0" prefHeight="26.0" prefWidth="135.0" promptText="buying price" />
-            <JFXTextField fx:id="txtProductSPrice" layoutX="189.0" layoutY="372.0" prefHeight="26.0" prefWidth="135.0" promptText="price" />
-            <JFXTextField fx:id="txtProductDiscount" layoutX="363.0" layoutY="372.0" prefHeight="26.0" prefWidth="135.0" promptText="discount" />
-            <JFXTextField fx:id="txtProductProfit" layoutX="535.0" layoutY="372.0" promptText="profit" />
-            <JFXTextField fx:id="txtProductCategory" layoutX="707.0" layoutY="372.0" promptText="category" />
-            <JFXButton layoutX="753.0" layoutY="428.0" onAction="#btnAddProductOnAction" prefHeight="26.0" prefWidth="66.0" style="-fx-background-color: #0077b3;" text="Add" textFill="WHITE">
+            <JFXTextField fx:id="txtProductName" layoutX="104.0" layoutY="313.0" prefHeight="26.0" prefWidth="135.0" promptText="name" />
+            <JFXTextField fx:id="txtProductSize" layoutX="278.0" layoutY="313.0" prefHeight="26.0" prefWidth="135.0" promptText="size" />
+            <JFXTextField fx:id="txtProductQty" layoutX="622.0" layoutY="313.0" promptText="qty" />
+            <JFXTextField fx:id="txtProductBPrice" layoutX="103.0" layoutY="372.0" prefHeight="26.0" prefWidth="135.0" promptText="buying price" />
+            <JFXTextField fx:id="txtProductSPrice" layoutX="274.0" layoutY="372.0" prefHeight="26.0" prefWidth="135.0" promptText="price" />
+            <JFXTextField fx:id="txtProductDiscount" layoutX="448.0" layoutY="372.0" prefHeight="26.0" prefWidth="135.0" promptText="discount" />
+            <JFXTextField fx:id="txtProductCategory" layoutX="622.0" layoutY="372.0" promptText="category" />
+            <JFXButton layoutX="668.0" layoutY="428.0" onAction="#btnAddProductOnAction" prefHeight="26.0" prefWidth="66.0" style="-fx-background-color: #0077b3;" text="Add" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="189.0" layoutY="453.0" onAction="#btnUpdateProductOnAction" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #29A829;" text="Update" textFill="WHITE">
+            <JFXButton layoutX="274.0" layoutY="453.0" onAction="#btnUpdateProductOnAction" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #29A829;" text="Update" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="265.0" layoutY="453.0" onAction="#btnDeleteProductOnAction" prefHeight="26.0" prefWidth="53.0" style="-fx-background-color: red;" text="Delete" textFill="WHITE">
+            <JFXButton layoutX="350.0" layoutY="453.0" onAction="#btnDeleteProductOnAction" prefHeight="26.0" prefWidth="53.0" style="-fx-background-color: red;" text="Delete" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="114.0" layoutY="454.0" onAction="#btnSearchProductOnAction" prefHeight="26.0" prefWidth="54.0" style="-fx-background-color: #0077b3;" text="Search" textFill="WHITE">
+            <JFXButton layoutX="199.0" layoutY="454.0" onAction="#btnSearchProductOnAction" prefHeight="26.0" prefWidth="54.0" style="-fx-background-color: #0077b3;" text="Search" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <JFXTextField fx:id="txtProductSearchByID" layoutX="18.0" layoutY="453.0" prefHeight="26.0" prefWidth="66.0" promptText="ID" />
-            <JFXComboBox fx:id="cmbProductSupplier" layoutX="535.0" layoutY="312.0" prefHeight="26.0" prefWidth="135.0" promptText="Supplier" />
+            <JFXTextField fx:id="txtProductSearchByID" layoutX="103.0" layoutY="453.0" prefHeight="26.0" prefWidth="66.0" promptText="ID" />
+            <JFXComboBox fx:id="cmbProductSupplier" layoutX="450.0" layoutY="312.0" prefHeight="26.0" prefWidth="135.0" promptText="Supplier" />
          </children>
       </AnchorPane>
    </children>
