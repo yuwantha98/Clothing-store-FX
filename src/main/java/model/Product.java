@@ -11,10 +11,10 @@ import lombok.ToString;
 @ToString
 public class Product {
 
-    private Long pID;
+    private String pID;
     private String pName;
     private String pSize;
-    private String pSupplier;
+    private String sID;
     private Integer pQuantity;
     private Double pBuyingPrice;
     private Double pPrice;
