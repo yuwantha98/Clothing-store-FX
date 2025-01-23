@@ -2,18 +2,16 @@ package controller;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import db.DBConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import model.Employee;
-import org.jasypt.util.text.BasicTextEncryptor;
+import dto.EmployeeDto;
+import util.CrudUtil;
+import util.EncryptionUtil;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -26,7 +24,7 @@ public class dashboardFormController {
     public JFXPasswordField jfxPassword;
 
     @FXML
-    public void btnEmpolyeeLogin(ActionEvent actionEvent) throws SQLException {
+    public void btnEmpolyeeLogin(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 
         String adminEmail = "admin@gmail.com";
         String adminPassword = "12345";
@@ -50,26 +48,22 @@ public class dashboardFormController {
             return;
         }
 
-        String SQL = "SELECT * FROM Employee WHERE eEmail="+"'"+txtEmail.getText()+"'";
+        String SQL = "SELECT * FROM Employee WHERE eEmail=?";
 
-        Connection connection = DBConnection.getInstance().getConnection();
-        ResultSet resultSet = connection.createStatement().executeQuery(SQL);
+        ResultSet rst = CrudUtil.execute(SQL, txtEmail.getText());
 
-        if(resultSet.next()){
-            Employee emp = new Employee(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getString(4),
-                    resultSet.getString(5)
+        if(rst.next()){
+            EmployeeDto emp = new EmployeeDto(
+                    rst.getString(2),
+                    rst.getString(3),
+                    rst.getString(4),
+                    rst.getString(5)
             );
 
-            String key = "#1998YUwa";
-            BasicTextEncryptor basicTextEncryptor = new BasicTextEncryptor();
-            basicTextEncryptor.setPassword(key);
-            String decrypt = basicTextEncryptor.decrypt(emp.getEPassword());
+            String decrypt1 = EncryptionUtil.decrypt(emp.getEPassword());
 
-            if(decrypt.equals(jfxPassword.getText())){
+
+            if(decrypt1.equals(jfxPassword.getText())){
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/employee_form.fxml"));
                     Scene scene = new Scene(loader.load());

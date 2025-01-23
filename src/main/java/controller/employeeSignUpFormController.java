@@ -1,19 +1,23 @@
 package controller;
 
-import db.DBConnection;
+import com.jfoenix.controls.JFXTextField;
+import dto.tm.EmployeeTm;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import dto.EmployeeDto;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.Employee;
-import org.jasypt.util.text.BasicTextEncryptor;
+import util.EncryptionUtil;
+import repository.DaoFactory;
+import repository.service.EmployeeDao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class employeeSignUpFormController {
@@ -34,71 +38,176 @@ public class employeeSignUpFormController {
     public TextField txtEmpConfirmPassword;
 
     @FXML
-    public void btnSignUpOnAction(ActionEvent actionEvent) throws SQLException {
-        String SQL = "INSERT INTO Employee (eName,eContact,eEmail,ePassword) VALUES(?,?,?,?)";
+    public TableView tblEmployee;
 
-        String key = "#1998YUwa";
-        BasicTextEncryptor basicTextEncryptor = new BasicTextEncryptor();
-        basicTextEncryptor.setPassword(key);
-        String encrypt = basicTextEncryptor.encrypt(txtEmpPassword.getText());
+    @FXML
+    public TableColumn colID;
 
-        if(txtEmpPassword.getText().equals(txtEmpConfirmPassword.getText())){
+    @FXML
+    public TableColumn colName;
 
-            Connection connection = DBConnection.getInstance().getConnection();
+    @FXML
+    public TableColumn colContact;
 
-            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM Employee WHERE eEmail="+"'"+txtEmpEmail.getText()+"'");
+    @FXML
+    public TableColumn colEmail;
 
-            if(!resultSet.next()) {
-                Employee emp = new Employee(
-                        "",
-                        txtEmpName.getText(),
-                        txtEmpContact.getText(),
-                        txtEmpEmail.getText(),
-                        encrypt
-                );
+    @FXML
+    public JFXTextField txtEmployeeSearchByID;
 
-                PreparedStatement psTm = connection.prepareStatement(SQL);
-                psTm.setString(1,emp.getEName());
-                psTm.setString(2,emp.getEContact());
-                psTm.setString(3,emp.getEEmail());
-                psTm.setString(4,emp.getEPassword());
-                int rowsAffected = psTm.executeUpdate();
+    EmployeeDao employeeDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.EMPLOYEE);
 
-                if (rowsAffected > 0) {
-                    new Alert(Alert.AlertType.INFORMATION, "Employee registered successfully!").show();
+    public void initialize(){
+        colID.setCellValueFactory(new PropertyValueFactory<>("eID"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("eName"));
+        colContact.setCellValueFactory(new PropertyValueFactory<>("eContact"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("eEmail"));
 
-                    txtEmpName.clear();
-                    txtEmpContact.clear();
-                    txtEmpEmail.clear();
-                    txtEmpPassword.clear();
-                    txtEmpConfirmPassword.clear();
+        loadTable();
+    }
 
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "Failed to register the employee. Please try again.").show();
-                }
+    public void loadTable(){
 
-            }else{
-                new Alert(Alert.AlertType.ERROR,"This email already used").show();
-            }
-        }else {
-            new Alert(Alert.AlertType.ERROR, "Passwords do not match.").show();
+        try {
+            ObservableList<EmployeeTm> all = employeeDao.findAll();
+            tblEmployee.setItems(all);
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            e.printStackTrace();
         }
     }
 
     @FXML
-    public void btnBackOnAction(ActionEvent actionEvent) {
+    public void btnSignUpOnAction(ActionEvent actionEvent) throws SQLException {
+        String email = txtEmpEmail.getText();
+        String password = txtEmpPassword.getText();
+        String confirmPassword = txtEmpConfirmPassword.getText();
+
+        if (!validateInputs()) {
+            return;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            new Alert(Alert.AlertType.ERROR, "Passwords do not match.").show();
+            return;
+        }
+
+        if (employeeDao.existsByEmail(email)) {
+            new Alert(Alert.AlertType.ERROR, "Email already exists! Please use a different email.").show();
+            return;
+        }
+
+        String encryptedPassword = EncryptionUtil.encrypt(password);
+
+        EmployeeDto employee = new EmployeeDto(
+                txtEmpName.getText(),
+                txtEmpContact.getText(),
+                txtEmpEmail.getText(),
+                encryptedPassword
+        );
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/admin_form.fxml"));
-            Scene scene = new Scene(loader.load());
+            boolean isAdded = employeeDao.save(employee);
+            if (isAdded) {
+                new Alert(Alert.AlertType.INFORMATION, "Employee added successfully!").show();
+                clearForm();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+    }
 
-            Stage stage = (Stage) ((javafx.scene.Node) actionEvent.getSource()).getScene().getWindow();
+    private boolean validateInputs() {
+        if (txtEmpName.getText().isEmpty() ||
+                txtEmpContact.getText().isEmpty() ||
+                txtEmpEmail.getText().isEmpty() ||
+                txtEmpPassword.getText().isEmpty() ||
+                txtEmpConfirmPassword.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "All fields are required.").show();
+            return false;
+        }
 
-            stage.setScene(scene);
-            stage.setTitle("Admin Form");
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!txtEmpEmail.getText().matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-z]{2,}")) {
+            new Alert(Alert.AlertType.ERROR, "Invalid email format.").show();
+            return false;
+        }
+
+        if (!txtEmpContact.getText().matches("\\d{10}")) {
+            new Alert(Alert.AlertType.ERROR, "Invalid contact number.").show();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void clearForm() {
+        txtEmpName.clear();
+        txtEmpContact.clear();
+        txtEmpEmail.clear();
+        txtEmpPassword.clear();
+        txtEmpConfirmPassword.clear();
+    }
+
+
+    @FXML
+    public void btnUpdateEmployeeOnAction(ActionEvent actionEvent) {
+        EmployeeDto employeeDto = new EmployeeDto(
+                txtEmpName.getText(),
+                txtEmpContact.getText(),
+                txtEmpEmail.getText(),
+                ""
+        );
+        try {
+            boolean isUpdate = employeeDao.update(employeeDto, Integer.valueOf(txtEmployeeSearchByID.getText()));
+            if(isUpdate){
+                new Alert(Alert.AlertType.INFORMATION,"Employer Update Successfully !").show();
+                loadTable();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Something went wrong !").show();
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+
+    }
+
+    @FXML
+    public void btnDeleteEmployeeOnAction(ActionEvent actionEvent) {
+        try {
+            boolean delete = employeeDao.delete(Integer.valueOf(txtEmployeeSearchByID.getText()));
+            if(delete){
+                new Alert(Alert.AlertType.INFORMATION,"Employer DELETE Successfully !").show();
+                loadTable();
+                clearForm();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Something went wrong !").show();
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+    }
+
+    @FXML
+    public void btnSearchEmployeeOnAction(ActionEvent actionEvent) {
+        try {
+            Integer employeeId = Integer.valueOf(txtEmployeeSearchByID.getText());
+            EmployeeDto employeeDto = employeeDao.find(employeeId);
+
+            if (employeeDto != null) {
+                txtEmpName.setText(employeeDto.getEName());
+                txtEmpContact.setText(employeeDto.getEContact());
+                txtEmpEmail.setText(employeeDto.getEEmail());
+            } else {
+                new Alert(Alert.AlertType.WARNING, "No employee found with ID: " + employeeId).show();
+                clearForm();
+            }
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Invalid ID format. Please enter a valid number.").show();
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Error fetching employee: " + e.getMessage()).show();
         }
     }
 }

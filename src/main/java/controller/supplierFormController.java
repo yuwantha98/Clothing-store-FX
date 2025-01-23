@@ -2,6 +2,10 @@ package controller;
 
 import com.jfoenix.controls.JFXTextField;
 import db.DBConnection;
+import dto.EmployeeDto;
+import dto.SupplierDto;
+import dto.tm.EmployeeTm;
+import dto.tm.SupplierTm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,8 +14,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Supplier;
-
+import repository.DaoFactory;
+import repository.service.EmployeeDao;
+import repository.service.SupplierDao;
 import java.sql.*;
 
 public class supplierFormController {
@@ -46,7 +51,7 @@ public class supplierFormController {
     @FXML
     public JFXTextField txtSupplierSearchByID;
 
-    ObservableList<Supplier> supplierList;
+    SupplierDao supplierDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER);
 
     public void initialize() {
 
@@ -55,193 +60,123 @@ public class supplierFormController {
         colCompany.setCellValueFactory(new PropertyValueFactory<>("sCompany"));
         colContact.setCellValueFactory(new PropertyValueFactory<>("sContact"));
 
-        loadSupplierData();
+        loadTable();
     }
 
-    private void loadSupplierData() {
-        supplierList = FXCollections.observableArrayList();
-
+    public void loadTable(){
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            String query = "SELECT * FROM Supplier";
-
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-
-            while (resultSet.next()) {
-                supplierList.add(new Supplier(
-                        resultSet.getString("sID"),
-                        resultSet.getString("sName"),
-                        resultSet.getString("sCompany"),
-                        resultSet.getString("sContact")
-                ));
-            }
-
-            // Set the data in the TableView
-            tblSupplier.setItems(supplierList);
-
-        } catch (SQLException e) {
+            ObservableList<SupplierTm> all = supplierDao.findAll();
+            tblSupplier.setItems(all);
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to load supplier data.").show();
         }
     }
 
     @FXML
     public void btnAddSupplierOnAction(ActionEvent actionEvent) throws SQLException {
-        String SQL = "INSERT INTO Supplier (sName,sCompany,sContact) VALUES(?,?,?)";
 
-        Connection connection = DBConnection.getInstance().getConnection();
-        Supplier supplier = new Supplier(
-                "",
+        if (!validateInputs()) {
+            return;
+        }
+
+        SupplierDto supplierDto = new SupplierDto(
                 txtSupplierName.getText(),
                 txtSupplierCompany.getText(),
                 txtSupplierContact.getText()
         );
 
-        PreparedStatement psTm = connection.prepareStatement(SQL);
-        psTm.setString(1,supplier.getSName());
-        psTm.setString(2,supplier.getSCompany());
-        psTm.setString(3,supplier.getSContact());
-        int rowsAffected = psTm.executeUpdate();
-
-        if (rowsAffected > 0) {
-            new Alert(Alert.AlertType.INFORMATION, "Supplier Added successfully!").show();
-            loadSupplierData();
-
-            txtSupplierName.clear();
-            txtSupplierCompany.clear();
-            txtSupplierContact.clear();
-
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Failed to add the supplier. Please try again.").show();
+        try {
+            boolean isAdded = supplierDao.save(supplierDto);
+            if (isAdded) {
+                new Alert(Alert.AlertType.INFORMATION, "Supplier added successfully!").show();
+                clearForm();
+                loadTable();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
+    }
+
+    private boolean validateInputs() {
+        if (txtSupplierName.getText().isEmpty() ||
+                txtSupplierCompany.getText().isEmpty() ||
+                txtSupplierContact.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "All fields are required.").show();
+            return false;
+        }
+
+        if (!txtSupplierContact.getText().matches("\\d{10}")) {
+            new Alert(Alert.AlertType.ERROR, "Invalid contact number.").show();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void clearForm() {
+        txtSupplierName.clear();
+        txtSupplierCompany.clear();
+        txtSupplierContact.clear();
     }
 
     @FXML
     public void btnUpdateSupplierOnAction(ActionEvent actionEvent) {
-
-        String supplierID = txtSupplierSearchByID.getText();
-        String updatedName = txtSupplierName.getText();
-        String updatedCompany = txtSupplierCompany.getText();
-        String updatedContact = txtSupplierContact.getText();
-
-        if (supplierID == null || supplierID.trim().isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "Please enter a valid Supplier ID to update.").show();
-        }else {
-
-            if (updatedName.trim().isEmpty() || updatedContact.trim().isEmpty() || updatedCompany.trim().isEmpty()) {
-                new Alert(Alert.AlertType.ERROR, "Please fill in all fields before updating.").show();
-            } else {
-
-                try {
-                    // Establish database connection
-                    Connection connection = DBConnection.getInstance().getConnection();
-
-                    // Prepare the update query
-                    String updateQuery = "UPDATE Supplier SET sName = ?, sCompany = ?, sContact = ? WHERE sID = ?";
-                    PreparedStatement ps = connection.prepareStatement(updateQuery);
-
-                    // Set the parameters
-                    ps.setString(1, updatedName);
-                    ps.setString(2, updatedCompany);
-                    ps.setString(3, updatedContact);
-                    ps.setString(4, supplierID);
-
-                    // Execute the update query
-                    int rowsAffected = ps.executeUpdate();
-
-                    if (rowsAffected > 0) {
-                        new Alert(Alert.AlertType.INFORMATION, "Supplier details updated successfully!").show();
-
-                        loadSupplierData();
-
-                    } else {
-                        new Alert(Alert.AlertType.WARNING, "No supplier found with the provided ID").show();
-                    }
-
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    new Alert(Alert.AlertType.ERROR, "An error occurred while updating supplier details.").show();
-                }
+        SupplierDto supplierDto = new SupplierDto(
+                txtSupplierName.getText(),
+                txtSupplierCompany.getText(),
+                txtSupplierContact.getText()
+        );
+        try {
+            boolean isUpdate = supplierDao.update(supplierDto, Integer.valueOf(txtSupplierSearchByID.getText()));
+            if(isUpdate){
+                new Alert(Alert.AlertType.INFORMATION,"Supplier Update Successfully !").show();
+                loadTable();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Something went wrong !").show();
             }
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     @FXML
     public void btnDeleteSupplierOnAction(ActionEvent actionEvent) {
-        String supplierId = txtSupplierSearchByID.getText();
-
-        if (supplierId == null || supplierId.trim().isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "Please enter a valid supplier ID to delete.").show();
-        }else {
-
-            try {
-                // Establish database connection
-                Connection connection = DBConnection.getInstance().getConnection();
-
-                // Prepare the update query
-                String deleteQuery = "DELETE FROM Supplier WHERE sID = ?";
-                PreparedStatement ps = connection.prepareStatement(deleteQuery);
-
-                ps.setString(1, supplierId);
-
-                // Execute the update query
-                int rowsAffected = ps.executeUpdate();
-
-                if (rowsAffected > 0) {
-                    new Alert(Alert.AlertType.INFORMATION, "Supplier details delete successfully!").show();
-
-                    loadSupplierData();
-
-                } else {
-                    new Alert(Alert.AlertType.WARNING, "No supplier found with the provided ID.").show();
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "An error occurred while deleting supplier details.").show();
+        try {
+            boolean delete = supplierDao.delete(Integer.valueOf(txtSupplierSearchByID.getText()));
+            if(delete){
+                new Alert(Alert.AlertType.INFORMATION,"Supplier DELETE Successfully !").show();
+                loadTable();
+                clearForm();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Something went wrong !").show();
             }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     @FXML
     public void btnSearchSupplierOnAction(ActionEvent actionEvent) {
+        try {
+            Integer supplierId = Integer.valueOf(txtSupplierSearchByID.getText());
+            SupplierDto supplierDto = supplierDao.find(supplierId);
 
-        String supplierId = txtSupplierSearchByID.getText();
-
-        if(supplierId == null || supplierId.trim().isEmpty()){
-            new Alert(Alert.AlertType.ERROR, "Please enter a valid supplier ID.").show();
-        }else {
-
-            try {
-
-                Connection connection = DBConnection.getInstance().getConnection();
-
-                String searchSQL = "SELECT * FROM Supplier WHERE sID = ?";
-                PreparedStatement ps = connection.prepareStatement(searchSQL);
-                ps.setString(1, supplierId);
-
-                // Execute the query
-                ResultSet resultSet = ps.executeQuery();
-
-                if (resultSet.next()) {
-                    // If the employee exists, set the text fields with their details
-                    txtSupplierName.setText(resultSet.getString("sName"));
-                    txtSupplierCompany.setText(resultSet.getString("sCompany"));
-                    txtSupplierContact.setText(resultSet.getString("sContact"));
-                } else {
-                    // If no employee found, show an alert
-                    new Alert(Alert.AlertType.WARNING, "No supplier found with the provided ID.").show();
-
-                    // Clear the text fields if no result
-                    txtSupplierName.clear();
-                    txtSupplierCompany.clear();
-                    txtSupplierContact.clear();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "An error occurred while searching for the supplier.").show();
+            if (supplierDto != null) {
+                txtSupplierName.setText(supplierDto.getSName());
+                txtSupplierCompany.setText(supplierDto.getSCompany());
+                txtSupplierContact.setText(supplierDto.getSContact());
+            } else {
+                new Alert(Alert.AlertType.WARNING, "No employee found with ID: " + supplierId).show();
+                clearForm();
             }
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Invalid ID format. Please enter a valid number.").show();
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Error fetching supplier : " + e.getMessage()).show();
         }
     }
 }

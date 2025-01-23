@@ -6,27 +6,21 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/dulmark_clothing";
-    private static final String USER = "root";
-    private static final String PASSWORD = "12345";
-
-    private Connection connection = null;
     private static DBConnection instance;
+    private Connection connection;
 
-    private DBConnection() { }
+    private DBConnection() throws SQLException, ClassNotFoundException {
+        connection= DriverManager.getConnection("jdbc:mysql://localhost/dulmark_clothing","root","12345");
+    }
 
     public Connection getConnection() {
-        if (connection == null) {
-            try {
-                connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
         return connection;
     }
 
-    public static DBConnection getInstance() {
-        return null == instance ? instance = new DBConnection() : instance;
+    public static DBConnection getInstance() throws SQLException, ClassNotFoundException {
+        if(null==instance){
+            instance=new DBConnection();
+        }
+        return instance;
     }
 }
