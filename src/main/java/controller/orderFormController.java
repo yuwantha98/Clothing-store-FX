@@ -219,6 +219,20 @@ public class orderFormController {
             boolean isOrderSaved = orderDao.save(order);
 
             if (isOrderSaved) {
+                for (OrderTm orderTm : orderList) {
+                    Integer productID = orderTm.getPID();
+                    Integer buyingQty = orderTm.getQty();
+
+                    // Fetch current product quantity
+                    Integer currentQuantity = productDao.getProductQuantity(productID);
+                    if (currentQuantity != null) {
+                        int newQuantity = currentQuantity - buyingQty;
+
+                        // Update the product quantity in the database
+                        productDao.updateProductQuantity(productID, newQuantity);
+                    }
+                }
+
                 new Alert(Alert.AlertType.INFORMATION, "Order placed successfully!").show();
                 clearForm();
             } else {

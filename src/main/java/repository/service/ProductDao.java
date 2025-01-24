@@ -13,4 +13,8 @@ public interface ProductDao extends CrudDao<ProductDto,Integer> {
     ObservableList<Integer> getAllProductIDs() throws SQLException, ClassNotFoundException;
 
     ProductDto find(Integer id) throws SQLException, ClassNotFoundException;
+
+    Integer getProductQuantity(Integer productID) throws SQLException, ClassNotFoundException;
+
+    void updateProductQuantity(Integer productID, int newQuantity)throws SQLException, ClassNotFoundException;
 }

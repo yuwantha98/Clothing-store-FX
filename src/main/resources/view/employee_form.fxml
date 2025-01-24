@@ -15,7 +15,7 @@
       </ImageView>
       <AnchorPane layoutY="-2.0" prefHeight="560.0" prefWidth="1069.0">
          <children>
-            <JFXButton layoutX="56.0" layoutY="237.0" onAction="#btnBackOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #0077b3;" text=" Back" textFill="WHITE">
+            <JFXButton layoutX="56.0" layoutY="294.0" onAction="#btnBackOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #0077b3;" text=" Back" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -30,5 +30,6 @@
          </children>
       </AnchorPane>
       <JFXButton layoutX="55.0" layoutY="113.0" onAction="#btnOrderOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #0077b3;" text="Order" textFill="WHITE" />
+      <JFXButton layoutX="56.0" layoutY="234.0" onAction="#btnReturnOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #0077b3;" text="Return" textFill="WHITE" />
    </children>
 </AnchorPane>
