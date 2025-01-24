@@ -111,6 +111,7 @@ public class employeeSignUpFormController {
             if (isAdded) {
                 new Alert(Alert.AlertType.INFORMATION, "Employee added successfully!").show();
                 clearForm();
+                loadTable();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
             }
