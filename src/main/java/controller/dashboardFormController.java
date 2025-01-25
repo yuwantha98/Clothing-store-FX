@@ -5,12 +5,18 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import dto.EmployeeDto;
 import util.CrudUtil;
 import util.EncryptionUtil;
+import util.EmailUtil;
+
+import javax.mail.MessagingException;
+import java.util.Random;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -86,4 +92,62 @@ public class dashboardFormController {
 
     }
 
+    public void forgotPassword(MouseEvent mouseEvent) {
+
+        String email = txtEmail.getText();
+        if (email.isEmpty() || !isValidEmail(email)) {
+            new Alert(Alert.AlertType.WARNING, "Please enter a valid email.").show();
+            return;
+        }
+
+        String generatedOtp = generateOtp();
+        openOtpPopup(generatedOtp);
+
+        new Thread(() ->{
+            try {
+                String subject = "Password Reset OTP";
+                String body = "Your OTP for password reset is: " + generatedOtp;
+
+                EmailUtil.sendEmail(email, subject, body);
+
+                javafx.application.Platform.runLater(() ->
+                        new Alert(Alert.AlertType.INFORMATION, "OTP sent to " + email).show()
+                );
+
+            } catch (MessagingException e) {
+                e.printStackTrace();
+                javafx.application.Platform.runLater(() ->
+                        new Alert(Alert.AlertType.ERROR, "Failed to send OTP. Please try again.").show()
+                );
+            }
+
+        }).start();
+    }
+
+    private boolean isValidEmail(String email) {
+        return email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}");
+    }
+
+    private String generateOtp() {
+        Random random = new Random();
+        int otp = 100000 + random.nextInt(900000);
+        return String.valueOf(otp);
+    }
+
+    private void openOtpPopup(String otp) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/verify_otp_form.fxml"));
+            Parent root = fxmlLoader.load();
+
+            verifyOTPForm controller = fxmlLoader.getController();
+            controller.setOtp(otp);
+
+            Stage stage = new Stage();
+            stage.setTitle("OTP Verify Form");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
