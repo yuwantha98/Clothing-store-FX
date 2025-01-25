@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.returnFormController">
    <children>
-      <BorderPane layoutX="14.0" layoutY="14.0" prefHeight="373.0" prefWidth="571.0" style="-fx-border-color: #00308F;">
-         <top>
-            <Label prefHeight="110.0" prefWidth="123.0" text="Return Product" textFill="#318ce7" BorderPane.alignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-         </top>
-      </BorderPane>
+      <JFXTextField fx:id="txtOrderID" layoutX="58.0" layoutY="129.0" prefHeight="26.0" prefWidth="100.0" promptText="Order ID" />
+      <JFXTextField fx:id="txtProductID" layoutX="192.0" layoutY="129.0" prefHeight="26.0" prefWidth="100.0" promptText="Product ID" />
+      <JFXTextField fx:id="txtReturnQty" layoutX="326.0" layoutY="129.0" prefHeight="26.0" prefWidth="100.0" promptText="Return Quantity" />
+      <Label layoutX="228.0" layoutY="45.0" text="Return Form" textFill="#0047b3">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="470.0" layoutY="127.0" onAction="#btnReturnOnAction" style="-fx-background-color: #0052cc;" text="Return" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="226.0" fitWidth="476.0" layoutX="54.0" layoutY="172.0" pickOnBounds="true">
+         <image>
+            <Image url="@../image/product-return-isolated-cartoon-vector-illustrations_107173-30295-removebg-preview.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
