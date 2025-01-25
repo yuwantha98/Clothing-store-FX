@@ -117,4 +117,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
             session.close();
         }
     }
+
+    @Override
+    public boolean updatePasswordByEmail(String email, String encryptedPassword) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("UPDATE Employee set  ePassword=? WHERE eEmail=?",
+                encryptedPassword,
+                email
+        );
+    }
 }
