@@ -7,7 +7,7 @@ public class DaoFactory {
     private DaoFactory(){}
 
     public enum DaoType{
-        PRODUCT,EMPLOYEE, ORDER, ORDERDETAIL, SUPPLIER
+        PRODUCT,EMPLOYEE, ORDER, ORDERDETAIL, SALESREPORT, SUPPLIER
     }
 
     public static DaoFactory getDaoFactory(){
@@ -27,6 +27,8 @@ public class DaoFactory {
                 return (T) new OrderDaoImpl();
             case ORDERDETAIL:
                 return (T) new OrderDetailDaoImpl();
+            case SALESREPORT:
+                return (T) new SalesReportDaoImpl();
             default:
                 throw new IllegalArgumentException("Invalid DAO type");
         }
