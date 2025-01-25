@@ -60,11 +60,9 @@ public class employeeFormController {
 
     public void btnReturnOnAction(ActionEvent actionEvent) {
         try {
-            // Load the FXML for the Add Form
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/return_form.fxml"));
             Parent root = fxmlLoader.load();
 
-            // Create a new stage (window)
             Stage stage = new Stage();
             stage.setTitle("Return Form");
             stage.setScene(new Scene(root));
