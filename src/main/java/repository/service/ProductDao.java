@@ -16,5 +16,6 @@ public interface ProductDao extends CrudDao<ProductDto,Integer> {
 
     Integer getProductQuantity(Integer productID) throws SQLException, ClassNotFoundException;
 
-    void updateProductQuantity(Integer productID, int newQuantity)throws SQLException, ClassNotFoundException;
+    boolean updateProductQuantity(Integer productID, int newQuantity)throws SQLException, ClassNotFoundException;
+
 }
