@@ -11,4 +11,6 @@ public interface EmployeeDao extends CrudDao<EmployeeDto,Integer> {
     ObservableList<EmployeeTm> findAll() throws SQLException, ClassNotFoundException;
     ObservableList<Integer> getAllEmployeeIDs() throws SQLException, ClassNotFoundException;
     boolean existsByEmail(String email);
+
+    boolean updatePasswordByEmail(String email, String encryptedPassword)throws SQLException, ClassNotFoundException;
 }
