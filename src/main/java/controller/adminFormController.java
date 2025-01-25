@@ -80,5 +80,10 @@ public class adminFormController {
 
     @FXML
     public void btnReportOnAction(ActionEvent actionEvent) {
+        try {
+            borderPane.setCenter(new FXMLLoader(getClass().getResource("/view/sales_report_form.fxml")).load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
