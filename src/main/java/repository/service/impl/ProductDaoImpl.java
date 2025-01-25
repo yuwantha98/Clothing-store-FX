@@ -190,18 +190,19 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public void updateProductQuantity(Integer productID, int newQuantity) throws SQLException, ClassNotFoundException {
+    public boolean updateProductQuantity(Integer productID, int newQuantity) throws SQLException, ClassNotFoundException {
         Session session = HibernateUtil.getSession();
         try {
             session.beginTransaction();
 
             String hql = "UPDATE Product p SET p.pQuantity = :newQuantity WHERE p.pID = :productID";
-            session.createQuery(hql)
+            int rowsAffected = session.createQuery(hql)
                     .setParameter("newQuantity", newQuantity)
                     .setParameter("productID", productID)
                     .executeUpdate();
 
             session.getTransaction().commit();
+            return rowsAffected > 0;
         } catch (Exception e) {
             if (session.getTransaction() != null) session.getTransaction().rollback();
             e.printStackTrace();
@@ -210,6 +211,4 @@ public class ProductDaoImpl implements ProductDao {
             session.close();
         }
     }
-
-
 }
