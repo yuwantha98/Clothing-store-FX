@@ -18,7 +18,9 @@ import repository.service.EmployeeDao;
 import repository.service.OrderDao;
 import repository.service.OrderDetailDao;
 import repository.service.ProductDao;
+import util.EmailUtil;
 
+import javax.mail.MessagingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -199,23 +201,21 @@ public class orderFormController {
             // Create Order
             Order order = new Order();
             order.setOrderDate(new Date());
-            order.setCustomerName(txtCustomerName.getText()); // Replace with actual customer ID logic
+            order.setCustomerName(txtCustomerName.getText());
             order.setTotalAmount(orderList.stream().mapToDouble(OrderTm::getTotalPrice).sum());
 
-            // Create and associate OrderDetails
             List<OrderDetail> orderDetails = new ArrayList<>();
             for (OrderTm orderTm : orderList) {
                 OrderDetail orderDetail = new OrderDetail();
-                orderDetail.setOrder(order); // Associate with the parent order
+                orderDetail.setOrder(order);
                 orderDetail.setProductID(orderTm.getPID());
                 orderDetail.setQuantity(orderTm.getQty());
                 orderDetail.setUnitPrice(orderTm.getUnitPrice());
                 orderDetail.setTotalPrice(orderTm.getTotalPrice());
                 orderDetails.add(orderDetail);
             }
-            order.setOrderDetails(orderDetails); // Associate details with the order
+            order.setOrderDetails(orderDetails);
 
-            // Save the order (cascade will save details)
             boolean isOrderSaved = orderDao.save(order);
 
             if (isOrderSaved) {
@@ -223,7 +223,6 @@ public class orderFormController {
                     Integer productID = orderTm.getPID();
                     Integer buyingQty = orderTm.getQty();
 
-                    // Fetch current product quantity
                     Integer currentQuantity = productDao.getProductQuantity(productID);
                     if (currentQuantity != null) {
                         int newQuantity = currentQuantity - buyingQty;
@@ -233,8 +232,29 @@ public class orderFormController {
                     }
                 }
 
-                new Alert(Alert.AlertType.INFORMATION, "Order placed successfully!").show();
-                clearForm();
+                // Send order details to customer's email
+                String customerEmail = txtCustomerEmail.getText();
+                String emailSubject = "Order Confirmation - Order #" + order.getOrderID();
+                StringBuilder emailBody = new StringBuilder();
+                emailBody.append("Dear ").append(txtCustomerName.getText()).append(",\n\n");
+                emailBody.append("Thank you for your order. Here are the details:\n");
+                emailBody.append("Order Date: ").append(order.getOrderDate()).append("\n");
+                emailBody.append("Order Details:\n");
+                for (OrderTm orderTm : orderList) {
+                    emailBody.append("- Product: ").append(orderTm.getItemName())
+                            .append(", Quantity: ").append(orderTm.getQty())
+                            .append(", Total Price: ").append(orderTm.getTotalPrice()).append("\n");
+                }
+                emailBody.append("\nTotal Amount: ").append(order.getTotalAmount()).append("\n");
+                emailBody.append("\nWe appreciate your business!\n\nBest regards,\nDulmark Clothing");
+
+                try {
+                    EmailUtil.sendEmail(customerEmail, emailSubject, emailBody.toString());
+                    new Alert(Alert.AlertType.INFORMATION, "Order placed and email sent successfully!").show();
+                    clearForm();
+                } catch (MessagingException e) {
+                    new Alert(Alert.AlertType.WARNING, "Order placed, but failed to send email: " + e.getMessage()).show();
+                }
             } else {
                 new Alert(Alert.AlertType.ERROR, "Failed to place the order!").show();
             }
@@ -243,7 +263,6 @@ public class orderFormController {
             e.printStackTrace();
         }
     }
-
 
     private void clearForm() {
         cmbProductID.setValue(null);
