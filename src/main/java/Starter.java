@@ -14,5 +14,6 @@ public class Starter extends Application {
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/dashboard_form.fxml"))));
         stage.show();
         stage.setTitle("Dulmark Clothing");
+        stage.setResizable(false);
     }
 }

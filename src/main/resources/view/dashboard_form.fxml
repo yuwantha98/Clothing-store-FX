@@ -7,6 +7,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.dashboardFormController">
@@ -40,5 +41,6 @@
          </font>
       </JFXPasswordField>
       <Label layoutX="363.0" layoutY="309.0" onMouseClicked="#forgotPassword" style="-fx-font-weight: bold;" text="forgot password ?" textFill="#e43f8c" />
+      <BorderPane layoutX="10.0" layoutY="14.0" prefHeight="376.0" prefWidth="579.0" style="-fx-border-color: #4872d9;" />
    </children>
 </AnchorPane>
