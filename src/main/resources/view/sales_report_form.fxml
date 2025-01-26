@@ -19,21 +19,21 @@
             <NumberAxis label="Sales" />
         </yAxis>
     </BarChart>
-   <Label layoutX="353.0" layoutY="32.0" prefHeight="18.0" prefWidth="153.0" text="Sales Report" textFill="#005ce6">
+   <Label layoutX="353.0" layoutY="32.0" prefHeight="18.0" prefWidth="153.0" text="Sales Report" textFill="#00a3cc">
       <font>
          <Font name="System Bold" size="24.0" />
       </font>
    </Label>
-    <DatePicker fx:id="datePicker" layoutX="91.0" layoutY="97.0" />
-    <Button layoutX="314.0" layoutY="97.0" onAction="#getDailyReport" style="-fx-background-color: #4c70a1;" text="Get Daily Report" textFill="WHITE">
+    <DatePicker fx:id="datePicker" layoutX="91.0" layoutY="97.0" stylesheets="@../css/Table.css" />
+    <Button layoutX="314.0" layoutY="97.0" onAction="#getDailyReport" style="-fx-background-color: #00a3cc;" text="Get Daily Report" textFill="WHITE">
       <font>
          <Font name="System Bold" size="13.0" />
       </font></Button>
-    <Button layoutX="461.0" layoutY="97.0" onAction="#getMonthlyReport" style="-fx-background-color: #4c70a1;" text="Get Monthly Report" textFill="WHITE">
+    <Button layoutX="461.0" layoutY="97.0" onAction="#getMonthlyReport" style="-fx-background-color: #00a3cc;" text="Get Monthly Report" textFill="WHITE">
       <font>
          <Font name="System Bold" size="13.0" />
       </font></Button>
-    <Button layoutX="625.0" layoutY="97.0" onAction="#getAnnualReport" style="-fx-background-color: #4c70a1;" text="Get Annual Report" textFill="WHITE">
+    <Button layoutX="625.0" layoutY="97.0" onAction="#getAnnualReport" style="-fx-background-color: #00a3cc;" text="Get Annual Report" textFill="WHITE">
       <font>
          <Font name="System Bold" size="13.0" />
       </font></Button>

@@ -13,7 +13,7 @@
    <children>
       <AnchorPane layoutX="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="860.0">
          <children>
-            <TableView fx:id="tblProduct" layoutX="16.0" layoutY="244.0" prefHeight="263.0" prefWidth="827.0">
+            <TableView fx:id="tblProduct" layoutX="16.0" layoutY="244.0" prefHeight="263.0" prefWidth="827.0" stylesheets="@../css/Table.css">
                <columns>
                   <TableColumn fx:id="colID" prefWidth="75.0" text="ID" />
                   <TableColumn fx:id="colName" prefWidth="127.20001220703125" text="Name" />
@@ -34,7 +34,7 @@
             <JFXTextField fx:id="txtProductSPrice" layoutX="215.0" layoutY="128.0" prefHeight="26.0" prefWidth="135.0" promptText="selling price" stylesheets="@../css/Table.css" unFocusColor="WHITE" />
             <JFXTextField fx:id="txtProductDiscount" layoutX="389.0" layoutY="128.0" prefHeight="26.0" prefWidth="135.0" promptText="discount" stylesheets="@../css/Table.css" unFocusColor="WHITE" />
             <JFXTextField fx:id="txtProductCategory" layoutX="563.0" layoutY="128.0" promptText="category" stylesheets="@../css/Table.css" unFocusColor="WHITE" />
-            <JFXButton layoutX="745.0" layoutY="106.0" onAction="#btnAddProductOnAction" prefHeight="30.0" prefWidth="78.0" style="-fx-background-color: #0077b3;" text="Add" textFill="WHITE">
+            <JFXButton layoutX="745.0" layoutY="106.0" onAction="#btnAddProductOnAction" prefHeight="30.0" prefWidth="78.0" style="-fx-background-color: #00a3cc;" text="Add" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -49,14 +49,14 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="215.0" layoutY="187.0" onAction="#btnSearchProductOnAction" prefHeight="30.0" prefWidth="78.0" style="-fx-background-color: #0077b3;" text="Search" textFill="WHITE">
+            <JFXButton layoutX="215.0" layoutY="187.0" onAction="#btnSearchProductOnAction" prefHeight="30.0" prefWidth="78.0" style="-fx-background-color: #00a3cc;" text="Search" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </JFXButton>
             <JFXTextField fx:id="txtProductSearchByID" layoutX="45.0" layoutY="186.0" prefHeight="26.0" prefWidth="135.0" promptText="ID" stylesheets="@../css/Table.css" unFocusColor="WHITE" />
             <JFXComboBox fx:id="cmbProductSupplier" focusColor="#9aace1" layoutX="391.0" layoutY="68.0" prefHeight="26.0" prefWidth="135.0" promptText="Supplier" stylesheets="@../css/Table.css" unFocusColor="WHITE" />
-            <Label layoutX="376.0" layoutY="17.0" style="-fx-font-size: 25; -fx-font-weight: bold;" text="Product Add" textFill="#284db1" />
+            <Label layoutX="376.0" layoutY="17.0" style="-fx-font-size: 25; -fx-font-weight: bold;" text="Product Add" textFill="#00a3cc" />
          </children>
       </AnchorPane>
    </children>

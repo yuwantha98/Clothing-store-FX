@@ -5,31 +5,45 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="560.0" prefWidth="1069.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.employeeFormController">
    <children>
       <ImageView fitHeight="560.0" fitWidth="1070.0" pickOnBounds="true">
-<!--         <image>-->
-<!--            <Image url="@../image/Untitled%20design%20(3).png" />-->
-<!--         </image>-->
+         <image>
+            <Image url="@../image/Untitled%20design%20(5).png" />
+         </image>
       </ImageView>
       <AnchorPane layoutY="-2.0" prefHeight="560.0" prefWidth="1069.0">
          <children>
-            <JFXButton layoutX="56.0" layoutY="294.0" onAction="#btnBackOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #0077b3;" text=" Back" textFill="WHITE">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../image/back.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
+            <JFXButton layoutX="56.0" layoutY="296.0" onAction="#btnBackOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #00a3cc;" text="      Back" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
             </JFXButton>
-            <JFXButton layoutX="55.0" layoutY="54.0" onAction="#btnProductOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #0077b3;" text="Product" textFill="WHITE" />
-            <JFXButton layoutX="56.0" layoutY="176.0" onAction="#btnSupplierOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #0077b3;" text="Supplier" textFill="WHITE" />
+            <JFXButton layoutX="55.0" layoutY="54.0" onAction="#btnProductOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #00a3cc;" stylesheets="@../css/Button.css" text="Product" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></JFXButton>
+            <JFXButton layoutX="56.0" layoutY="175.0" onAction="#btnSupplierOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #00a3cc;" text="Supplier" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></JFXButton>
             <BorderPane fx:id="borderPane" layoutX="174.0" layoutY="21.0" prefHeight="520.0" prefWidth="860.0" />
+            <ImageView fitHeight="19.0" fitWidth="23.0" layoutX="62.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/back.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
-      <JFXButton layoutX="55.0" layoutY="113.0" onAction="#btnOrderOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #0077b3;" text="Order" textFill="WHITE" />
-      <JFXButton layoutX="56.0" layoutY="234.0" onAction="#btnReturnOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #0077b3;" text="Return" textFill="WHITE" />
+      <JFXButton layoutX="55.0" layoutY="113.0" onAction="#btnOrderOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #00a3cc;" text="Order" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></JFXButton>
+      <JFXButton layoutX="56.0" layoutY="234.0" onAction="#btnReturnOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #00a3cc;" text="Return" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></JFXButton>
    </children>
 </AnchorPane>

@@ -6,10 +6,12 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.returnFormController">
    <children>
+      <BorderPane layoutX="14.0" layoutY="14.0" prefHeight="374.0" prefWidth="570.0" style="-fx-border-color: blue;" />
       <JFXTextField fx:id="txtOrderID" layoutX="58.0" layoutY="129.0" prefHeight="26.0" prefWidth="100.0" promptText="Order ID" />
       <JFXTextField fx:id="txtProductID" layoutX="192.0" layoutY="129.0" prefHeight="26.0" prefWidth="100.0" promptText="Product ID" />
       <JFXTextField fx:id="txtReturnQty" layoutX="326.0" layoutY="129.0" prefHeight="26.0" prefWidth="100.0" promptText="Return Quantity" />
