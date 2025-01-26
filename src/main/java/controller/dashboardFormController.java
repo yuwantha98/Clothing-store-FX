@@ -48,6 +48,7 @@ public class dashboardFormController {
                 stage.setScene(scene);
                 stage.setTitle("Admin Form");
                 stage.show();
+                stage.setResizable(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -79,6 +80,7 @@ public class dashboardFormController {
                     stage.setScene(scene);
                     stage.setTitle("Employee Form");
                     stage.show();
+                    stage.setResizable(false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -146,6 +148,7 @@ public class dashboardFormController {
             stage.setTitle("OTP Verify Form");
             stage.setScene(new Scene(root));
             stage.show();
+            stage.setResizable(false);
         } catch (Exception e) {
             e.printStackTrace();
         }

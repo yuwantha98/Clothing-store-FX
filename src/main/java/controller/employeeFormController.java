@@ -26,6 +26,7 @@ public class employeeFormController {
             stage.setScene(scene);
             stage.setTitle("Dulmark Clothing");
             stage.show();
+            stage.setResizable(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,6 +68,7 @@ public class employeeFormController {
             stage.setTitle("Return Form");
             stage.setScene(new Scene(root));
             stage.show();
+            stage.setResizable(false);
         } catch (Exception e) {
             e.printStackTrace();
         }

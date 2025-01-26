@@ -64,6 +64,7 @@ public class adminFormController {
             stage.setScene(scene);
             stage.setTitle("Dulmark Clothing");
             stage.show();
+            stage.setResizable(false);
         } catch (Exception e) {
             e.printStackTrace();
         }

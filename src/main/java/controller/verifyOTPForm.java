@@ -40,6 +40,7 @@ public class verifyOTPForm {
             stage.setScene(scene);
             stage.setTitle("Forgot Password Form");
             stage.show();
+            stage.setResizable(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
