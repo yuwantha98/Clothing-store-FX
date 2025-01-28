@@ -1,4 +1,4 @@
-/* Default button style */
+
 .button {
   -fx-effect: dropshadow(
     gaussian,
@@ -7,11 +7,11 @@
     0,
     0,
     1
-  ); /* Subtle shadow */
+  );
 }
 
 Hover effect .button:hover {
-  -fx-background-color: #5dade2; /* Change background on hover */
+  -fx-background-color: #5dade2;
   -fx-effect: dropshadow(
     gaussian,
     rgba(0, 0, 0, 0.35),
@@ -19,14 +19,13 @@ Hover effect .button:hover {
     0.5,
     0,
     2
-  ); /* Larger shadow */
-  -fx-border-color: #2980b9; /* Optional border color change */
-  -fx-border-width: 1; /* Show border on hover */
+  );
+  -fx-border-color: #2980b9;
+  -fx-border-width: 1;
 }
 
-/* Pressed effect */
 .button:pressed {
-  -fx-background-color: #2980b9; /* Darker background when pressed */
+  -fx-background-color: #2980b9;
   -fx-effect: dropshadow(
     gaussian,
     rgba(0, 0, 0, 0.5),
@@ -34,14 +33,14 @@ Hover effect .button:hover {
     0.3,
     0,
     1
-  ); /* Smaller shadow */
-  -fx-translate-y: 2px; /* Slightly push button down for pressed effect */
+  );
+  -fx-translate-y: 2px;
 }
 
-/* Disabled button style */
+
 .button:disabled {
-  -fx-background-color: #d6d6d6; /* Light gray for disabled */
-  -fx-text-fill: #7d7d7d; /* Gray text */
-  -fx-effect: none; /* No shadow for disabled buttons */
-  -fx-cursor: default; /* No pointer cursor */
+  -fx-background-color: #d6d6d6;
+  -fx-text-fill: #7d7d7d;
+  -fx-effect: none;
+  -fx-cursor: default;
 }

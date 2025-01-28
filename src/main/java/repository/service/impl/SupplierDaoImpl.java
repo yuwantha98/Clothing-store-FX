@@ -48,7 +48,7 @@ public class SupplierDaoImpl implements SupplierDao {
             List<Supplier> suppliers = session.createQuery("FROM Supplier", Supplier.class).list();
             return FXCollections.observableArrayList(
                     suppliers.stream()
-                            .map(Supplier::getSCompany) // Get supplier company names
+                            .map(Supplier::getSCompany)
                             .collect(Collectors.toList())
             );
         } finally {

@@ -10,11 +10,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class OrderTm {
-    private Integer pID;         // Product ID
-    private String itemName;     // Product Name
+    private Integer pID;
     private String customerName;
-    private Integer qty;         // Quantity
-    private Double unitPrice;    // Unit price
-    private Double discount;     // Discount (percentage)
-    private Double totalPrice;   // Total price
+    private String itemName;
+    private Integer qty;
+    private Double unitPrice;
+    private Double discount;
+    private Double totalPrice;
 }

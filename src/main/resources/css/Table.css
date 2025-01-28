@@ -4,16 +4,16 @@
 
 .jfx-text-field {
   -fx-prompt-text-fill: white;
-  -fx-text-fill: white; /* Change the prompt text color to white */
+  -fx-text-fill: white;
 }
 
 .jfx-combo-box {
-  -fx-prompt-text-fill: white; /* Change the prompt text color to white */
+  -fx-prompt-text-fill: white;
   -fx-text-fill: white;
 }
 .jfx-combo-box .arrow-button .arrow {
-  -fx-background-color: white; /* Change the arrow color */
-  -fx-shape: "M 0 0 L 4 4 L 8 0 Z"; /* Optional: Modify the arrow shape */
+  -fx-background-color: white;
+  -fx-shape: "M 0 0 L 4 4 L 8 0 Z";
 }
 
 .btn {

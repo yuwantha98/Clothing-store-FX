@@ -15,7 +15,7 @@ import java.util.Map;
 public class SalesReportFormController {
 
     @FXML
-    public BarChart<String, Double> salesChart; // Generic BarChart
+    public BarChart<String, Double> salesChart;
     @FXML
     public DatePicker datePicker;
 

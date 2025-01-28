@@ -1,12 +1,8 @@
 package controller;
 
 import com.jfoenix.controls.JFXTextField;
-import db.DBConnection;
-import dto.EmployeeDto;
 import dto.SupplierDto;
-import dto.tm.EmployeeTm;
 import dto.tm.SupplierTm;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +11,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import repository.DaoFactory;
-import repository.service.EmployeeDao;
 import repository.service.SupplierDao;
 import java.sql.*;
 
@@ -35,9 +30,6 @@ public class supplierFormController {
 
     @FXML
     public TableColumn colCompany;
-
-    @FXML
-    public JFXTextField txtSupplierID;
 
     @FXML
     public JFXTextField txtSupplierName;
@@ -100,28 +92,6 @@ public class supplierFormController {
         }
     }
 
-    private boolean validateInputs() {
-        if (txtSupplierName.getText().isEmpty() ||
-                txtSupplierCompany.getText().isEmpty() ||
-                txtSupplierContact.getText().isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "All fields are required.").show();
-            return false;
-        }
-
-        if (!txtSupplierContact.getText().matches("\\d{10}")) {
-            new Alert(Alert.AlertType.ERROR, "Invalid contact number.").show();
-            return false;
-        }
-
-        return true;
-    }
-
-    private void clearForm() {
-        txtSupplierName.clear();
-        txtSupplierCompany.clear();
-        txtSupplierContact.clear();
-    }
-
     @FXML
     public void btnUpdateSupplierOnAction(ActionEvent actionEvent) {
         SupplierDto supplierDto = new SupplierDto(
@@ -178,5 +148,27 @@ public class supplierFormController {
         } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, "Error fetching supplier : " + e.getMessage()).show();
         }
+    }
+
+    private boolean validateInputs() {
+        if (txtSupplierName.getText().isEmpty() ||
+                txtSupplierCompany.getText().isEmpty() ||
+                txtSupplierContact.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "All fields are required.").show();
+            return false;
+        }
+
+        if (!txtSupplierContact.getText().matches("\\d{10}")) {
+            new Alert(Alert.AlertType.ERROR, "Invalid contact number.").show();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void clearForm() {
+        txtSupplierName.clear();
+        txtSupplierCompany.clear();
+        txtSupplierContact.clear();
     }
 }

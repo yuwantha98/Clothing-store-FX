@@ -24,7 +24,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         try {
             session.beginTransaction();
             Employee empEntity = new ModelMapper().map(employee, Employee.class);
-            session.persist(empEntity); // Hibernate will auto-generate eID
+            session.persist(empEntity);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {

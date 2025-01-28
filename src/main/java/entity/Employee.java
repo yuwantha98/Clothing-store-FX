@@ -11,23 +11,23 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "Employee") // Ensure the table name matches your database
+@Table(name = "Employee")
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generate IDs
-    @Column(name = "eID") // Map to the column name in the database
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "eID")
     private Integer eID;
 
-    @Column(name = "eName", nullable = false) // Explicit mapping for name
+    @Column(name = "eName", nullable = false)
     private String eName;
 
-    @Column(name = "eContact", nullable = false) // Explicit mapping for contact
+    @Column(name = "eContact", nullable = false)
     private String eContact;
 
-    @Column(name = "eEmail", unique = true, nullable = false) // Explicit mapping for email
+    @Column(name = "eEmail", unique = true, nullable = false)
     private String eEmail;
 
-    @Column(name = "ePassword", nullable = false) // Explicit mapping for password
+    @Column(name = "ePassword", nullable = false)
     private String ePassword;
 }

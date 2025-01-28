@@ -226,13 +226,12 @@ public class orderFormController {
     @FXML
     public void btnPlaceOrderOnAction(ActionEvent actionEvent) {
         try {
-            // Validate inputs
+
             if (txtCustomerName.getText().isEmpty() || txtCustomerContact.getText().isEmpty() || orderList.isEmpty()) {
                 new Alert(Alert.AlertType.WARNING, "Please fill all fields and add items to the cart!").show();
                 return;
             }
 
-            // Create Order
             Order order = new Order();
             order.setOrderDate(new Date());
             order.setCustomerName(txtCustomerName.getText());
@@ -261,26 +260,28 @@ public class orderFormController {
                     if (currentQuantity != null) {
                         int newQuantity = currentQuantity - buyingQty;
 
-                        // Update the product quantity in the database
                         productDao.updateProductQuantity(productID, newQuantity);
                     }
                 }
 
-                // Send order details to customer's email
                 String customerEmail = txtCustomerEmail.getText();
-                String emailSubject = "Order Confirmation - Order #" + order.getOrderID();
+                String emailSubject = "Order Confirmation - Order ID " + order.getOrderID();
+
                 StringBuilder emailBody = new StringBuilder();
                 emailBody.append("Dear ").append(txtCustomerName.getText()).append(",\n\n");
-                emailBody.append("Thank you for your order. Here are the details:\n");
-                emailBody.append("Order Date: ").append(order.getOrderDate()).append("\n");
+
+                emailBody.append("Thank you for your order. Here are the details:\n\n");
+                emailBody.append("Order Date: ").append(order.getOrderDate()).append("\n\n");
+
                 emailBody.append("Order Details:\n");
                 for (OrderTm orderTm : orderList) {
                     emailBody.append("- Product: ").append(orderTm.getItemName())
+                            .append(", Product ID: ").append(orderTm.getPID())
                             .append(", Quantity: ").append(orderTm.getQty())
                             .append(", Total Price: ").append(orderTm.getTotalPrice()).append("\n");
                 }
                 emailBody.append("\nTotal Amount: ").append(order.getTotalAmount()).append("\n");
-                emailBody.append("\nWe appreciate your business!\n\nBest regards,\nDulmark Clothing");
+                emailBody.append("\nBest regards,\nDulmark Clothing");
 
                 try {
                     EmailUtil.sendEmail(customerEmail, emailSubject, emailBody.toString());

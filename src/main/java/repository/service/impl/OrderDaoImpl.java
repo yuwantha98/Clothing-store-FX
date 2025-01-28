@@ -12,7 +12,7 @@ public class OrderDaoImpl implements OrderDao {
         Session session = HibernateUtil.getSession();
         try {
             session.beginTransaction();
-            session.persist(order); // Save the Order and cascade to OrderDetails if configured
+            session.persist(order);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {

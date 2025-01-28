@@ -14,6 +14,7 @@ public interface SupplierDao extends CrudDao<SupplierDto,Integer> {
     ObservableList<String> getAllSupplierNames() throws SQLException, ClassNotFoundException;
 
     Integer findSupplierIDByName(String supplierName) throws SQLException, ClassNotFoundException;
+
     String findSupplierNameByID(Integer supplierID) throws SQLException, ClassNotFoundException;
 
 }

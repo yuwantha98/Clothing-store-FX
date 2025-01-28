@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class EmailUtil {
     public static void sendEmail(String recipient, String subject, String body) throws MessagingException {
-        // SMTP configuration
+
         String senderEmail = "raviharajavafx@gmail.com";
         String senderPassword = "ofli zdql zqrz amik";
 
@@ -30,6 +30,5 @@ public class EmailUtil {
         message.setText(body);
 
         Transport.send(message);
-        System.out.println("Email sent successfully to " + recipient);
     }
 }
