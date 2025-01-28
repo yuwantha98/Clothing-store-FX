@@ -5,14 +5,18 @@ import com.jfoenix.controls.JFXTextField;
 import dto.tm.OrderTm;
 import entity.Order;
 import entity.OrderDetail;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Duration;
 import repository.DaoFactory;
 import repository.service.EmployeeDao;
 import repository.service.OrderDao;
@@ -22,6 +26,8 @@ import util.EmailUtil;
 
 import javax.mail.MessagingException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -82,6 +88,12 @@ public class orderFormController {
     @FXML
     public JFXTextField txtProductPrice;
 
+    @FXML
+    public Label lblTime;
+
+    @FXML
+    public Label lblNetTotal;
+
     ObservableList<OrderTm> orderList = FXCollections.observableArrayList();
     OrderDao orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
     OrderDetailDao orderDetailDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDERDETAIL);
@@ -101,6 +113,15 @@ public class orderFormController {
 
         loadProductIDs();
         loadEmployeeIDs();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            LocalDateTime now = LocalDateTime.now();
+            lblTime.setText(now.format(formatter));
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
 
         cmbProductID.setOnAction(event -> loadProductDetails());
 
@@ -173,6 +194,15 @@ public class orderFormController {
 
             orderList.add(orderTm);
             tblOrder.refresh();
+
+            double netTotal = 0.0;
+
+            for (OrderTm order : orderList) {
+                netTotal += order.getTotalPrice();
+            }
+
+            lblNetTotal.setText(String.valueOf(netTotal));
+
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Error adding to cart: " + e.getMessage()).show();
         }
@@ -182,6 +212,10 @@ public class orderFormController {
     public void btnRemoveProductOnAction(ActionEvent actionEvent) {
         OrderTm selectedItem = (OrderTm) tblOrder.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
+            double currentTotal = Double.parseDouble(lblNetTotal.getText());
+            double updatedTotal = currentTotal - selectedItem.getTotalPrice();
+
+            lblNetTotal.setText(String.valueOf(updatedTotal));
             orderList.remove(selectedItem);
             tblOrder.refresh();
         } else {

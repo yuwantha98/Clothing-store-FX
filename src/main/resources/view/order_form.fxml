@@ -50,6 +50,21 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
+            <Label fx:id="lblTime" layoutX="18.0" layoutY="25.0" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="18.0" layoutY="472.0" prefHeight="27.0" prefWidth="98.0" text="Net Total : " textFill="#f74444">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblNetTotal" layoutX="116.0" layoutY="472.0" text="0.00" textFill="#f74444">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>
